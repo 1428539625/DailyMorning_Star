@@ -148,7 +148,7 @@ def recommend_outfit(weather,temp):
 
     elif '雨' in condition:
         if temperature >= 15:
-            return '今天有雨，记得带伞。可以穿长袖和长裤，并搭配一件轻便的雨衣。'
+            return '今天有雨，记得带伞。可以穿长袖和长裤。'
         else:
             return '今天有雨，记得带伞。建议穿长袖加外套，配上长裤。'
 
