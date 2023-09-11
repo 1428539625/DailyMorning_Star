@@ -281,10 +281,10 @@ if __name__ == "__main__":
     # 穿搭推荐
     chuanda= recommend_outfit(weather,max_temperature)
     # 获取词霸每日金句
-    xingzuo, yunshi = get_ciba()
+    note_ch, note_en = get_ciba()
     # 获取星座运势
     mybirthday = config["birthday1"]["birthday"]
-    note_ch, note_en = get_xzys(mybirthday)
+    xingzuo, yunshi = get_xzys(mybirthday)
     # 公众号推送消息
     for user in users:
         send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en,xingzuo,yunshi,chuanda)
