@@ -110,18 +110,22 @@ def get_ciba():
     note_ch = r.json()["note"]
     return note_ch, note_en
 
-def get_xzys(mybirthday):
+def get_xz(mybirthday):
     
     url = "https://zj.v.api.aa1.cn/api/Age-calculation/?birthday="+mybirthday  
     r = get(url, timeout=10)
     xingzuo = r.json()["constellation"]
+    
+    return xingzuo
+
+def get_ys(xingzuo):
     
     url2 = "http://web.juhe.cn:8080/constellation/getAll?type=today&key=4a11bbcbf089edaf14c2d9bdb80c2ec4&consName="+xingzuo
    
     r2 = get(url2, timeout=10)
     yunshi = r2.json()["summary"]
     
-    return xingzuo, yunshi
+    return yunshi
 
 def recommend_outfit(weather,temp):
     temperature_match = re.search(r'\d+', temp)
@@ -284,7 +288,8 @@ if __name__ == "__main__":
     note_ch, note_en = get_ciba()
     # 获取星座运势
     mybirthday = config["birthday1"]["birthday"]
-    xingzuo, yunshi = get_xzys(mybirthday)
+    xingzuo = get_xz(mybirthday)
+    yunshi = get_ys(xingzuo)
     # 公众号推送消息
     for user in users:
         send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en,xingzuo,yunshi,chuanda)
