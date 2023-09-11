@@ -10,7 +10,7 @@
 "template_id1": "MziJYHVS1qk2i9YKDCaqNPRbKZKBMIolazKCjmGbMFk",
 # 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
 "user": ["oSZuy6jZbqJiSmmvp3W3gwiDnKcE", "oSZuy6jZbqJiSmmvp3W3gwiDnKcE"],
-"user1": ["oSZuy6jZbqJiSmmvp3W3gwiDnKcE", "oSZuy6jZbqJiSmmvp3W3gwiDnKcE"],
+"user1": ["oSZuy6jZbqJiSmmvp3W3gwiDnKcE", "oSZuy6vbwFSvuDkZ_XEZli8Etikc"],
 
 # 信息配置
 # 所在省份   不加省，河北省写河北
@@ -22,7 +22,7 @@
 # 生日2
 "birthday2": {"name": "李洋", "birthday": "1999-10-01"},
 # 生日3
-"birthday3": {"name": "方雅婷", "birthday": "2000-12-17"},
+"birthday3": {"name": "方雅婷", "birthday": "2000-08-07"},
 # 在一起的日子，格式同上
 "love_date": "2023-08-28",
 "love_date1": "2023-09-03"
