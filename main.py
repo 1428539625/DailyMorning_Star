@@ -112,20 +112,13 @@ def get_ciba():
 
 def get_xzys(mybirthday):
     
-    url = "https://zj.v.api.aa1.cn/api/Age-calculation/?birthday="+mybirthday
-    headers = {
-        'Content-Type': 'application/json',
-        'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-    }    
-    r = get(url, headers=headers)
+    url = "https://zj.v.api.aa1.cn/api/Age-calculation/?birthday="+mybirthday  
+    r = get(url, timeout=10)
     xingzuo = r.json()["constellation"]
     
     url2 = "http://web.juhe.cn:8080/constellation/getAll?type=today&key=4a11bbcbf089edaf14c2d9bdb80c2ec4&consName="+xingzuo
-    headers = {
-        'Content-Type': 'application/json',
-        'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-    }    
-    r2 = get(url2, headers=headers)
+   
+    r2 = get(url2, timeout=10)
     yunshi = r2.json()["summary"]
     
     return xingzuo, yunshi
