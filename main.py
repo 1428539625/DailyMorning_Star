@@ -130,10 +130,15 @@ def get_xzys(mybirthday):
     return xingzuo, yunshi
 
 def recommend_outfit(weather,temp):
-    condition = weather
-    temperature = int(temp)
+    temperature_match = re.search(r'\d+', temp)
     
+    if temperature_match:
+        temperature = int(temperature_match.group())
+    else:
+        # 如果无法提取温度数字，可以采取适当的默认值或错误处理策略
+        temperature = 0  # 这里使用0作为默认值，您可以根据需要进行修改
 
+    condition = weather
     # 根据天气条件和温度提供穿搭建议
     if '晴' in condition:
         if temperature >= 25:
