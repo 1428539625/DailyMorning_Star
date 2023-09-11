@@ -111,7 +111,7 @@ def get_ciba():
 
 def get_xzys(mybirthday):
     
-    url = "https://zj.v.api.aa1.cn/api/Age-calculation/?birthday="+mybirthday.birthday
+    url = "https://zj.v.api.aa1.cn/api/Age-calculation/?birthday="+mybirthday
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
@@ -283,7 +283,7 @@ if __name__ == "__main__":
     # 获取词霸每日金句
     xingzuo, yunshi = get_ciba()
     # 获取星座运势
-    mybirthday = config["birthday1"]
+    mybirthday = config["birthday1"]["birthday"]
     note_ch, note_en = get_xzys(mybirthday)
     # 公众号推送消息
     for user in users:
