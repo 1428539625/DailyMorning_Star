@@ -130,8 +130,8 @@ def get_xzys(mybirthday):
     return xingzuo, yunshi
 
 def recommend_outfit(weather,temp):
-    temperature = weather
-    condition = temp
+    temperature = temp
+    condition = weather
 
     # 根据天气条件和温度提供穿搭建议
     if '晴' in condition:
