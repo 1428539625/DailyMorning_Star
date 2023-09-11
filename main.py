@@ -109,8 +109,56 @@ def get_ciba():
     note_ch = r.json()["note"]
     return note_ch, note_en
 
+def get_xzys(mybirthday):
+    
+    url = "https://zj.v.api.aa1.cn/api/Age-calculation/?birthday="+mybirthday.birthday
+    headers = {
+        'Content-Type': 'application/json',
+        'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+    }    
+    r = get(url, headers=headers)
+    xingzuo = r.json()["constellation"]
+    
+    url2 = "http://web.juhe.cn:8080/constellation/getAll?type=today&key=4a11bbcbf089edaf14c2d9bdb80c2ec4&consName="+xingzuo
+    headers = {
+        'Content-Type': 'application/json',
+        'User-Agent': "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+    }    
+    r2 = get(url2, headers=headers)
+    yunshi = r2.json()["summary"]
+    
+    return xingzuo, yunshi
 
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, note_ch, note_en):
+def recommend_outfit(weather,temp):
+    temperature = weather
+    condition = temp
+
+    # 根据天气条件和温度提供穿搭建议
+    if '晴' in condition:
+        if temperature >= 25:
+            return '今天阳光明媚，适合穿短袖和短裤。记得擦防晒霜哦！'
+        elif temperature >= 20:
+            return '今天天气不错，可以穿T恤搭配长裤或裙子。'
+        else:
+            return '今天有点凉，建议穿长袖加外套，配上长裤。'
+
+    elif '雨' in condition:
+        if temperature >= 15:
+            return '今天有雨，记得带伞。可以穿长袖和长裤，并搭配一件轻便的雨衣。'
+        else:
+            return '今天有雨，记得带伞。建议穿长袖加外套，配上长裤。'
+
+    elif '云' in condition:
+        if temperature >= 20:
+            return '今天多云，可以穿短袖搭配长裤或裙子。'
+        else:
+            return '今天多云，建议穿长袖加外套，配上长裤。'
+
+    else:
+        return '无法提供穿搭建议，天气数据不完整或不支持的天气条件。'
+
+
+def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, note_ch, note_en,xingzuo,yunshi,chuanda):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -167,7 +215,20 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
             "note_ch": {
                 "value": note_ch,
                 "color": get_color()
+            },
+            "xingzuo": {
+                "value": xingzuo,
+                "color": get_color()
+            },
+            "yunshi": {
+                "value": yunshi,
+                "color": get_color()
+            },
+            "chuanda": {
+                "value": chuanda,
+                "color": get_color()
             }
+            
         }
     }
     for key, value in birthdays.items():
@@ -217,9 +278,14 @@ if __name__ == "__main__":
     # 传入省份和市获取天气信息
     province, city = config["province"], config["city"]
     weather, max_temperature, min_temperature = get_weather(province, city)
+    # 穿搭推荐
+    chuanda= recommend_outfit(weather,max_temperature)
     # 获取词霸每日金句
-    note_ch, note_en = get_ciba()
+    xingzuo, yunshi = get_ciba()
+    # 获取星座运势
+    mybirthday = config["birthday1"]
+    note_ch, note_en = get_xzys(mybirthday)
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
+        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en,xingzuo,yunshi,chuanda)
     os.system("pause")
